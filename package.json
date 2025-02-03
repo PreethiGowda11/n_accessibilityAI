@@ -1,0 +1,24 @@
+{
+    "name": "nilgiriaccessibility",
+    "version": "1.0.0",
+    "description": "Automated accessibility testing using Playwright and axe-core",
+    "main": "index.js",
+    "keywords": [],
+    
+    "scripts": {
+        "dependencyInstall": "npm install axios dotenv playwright readline-sync ts-node typescript --save-dev",
+        "test": "node test/main.js"
+    },
+    "dependencies": {
+        "axe-core": "^4.10.2"
+    },
+    "devDependencies": {
+        "@types/node": "^20.6.0",
+        "axios": "^1.7.9",
+        "dotenv": "^16.4.7",
+        "playwright": "^1.50.0",
+        "readline-sync": "^1.4.10",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.7.3"
+    }
+}
