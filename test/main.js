@@ -50,10 +50,10 @@ const runScripts = async () => {
     }
   });
 };
-
-// Export all functions and objects
-module.exports = {
-  rl,
-  executeCommand,
-  runScripts,
-};
+runScripts();
+// // Export all functions and objects
+// module.exports = {
+//   rl,
+//   executeCommand,
+//   runScripts,
+// };
