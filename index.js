@@ -1,3 +1,3 @@
-const { main } = require('./test/main');
+const { runAccessibilityCheck } = require('./test/main');
 
-module.exports = { main };
+module.exports = { runAccessibilityCheck };

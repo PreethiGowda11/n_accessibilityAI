@@ -1,8 +1,8 @@
-const { runAccessibilityTest } = require('./accessibility');
-const { processAllViolations } = require('./aiReport');
+const { runAccessibilityTest } = require('../src/accessibility');
+const { processAllViolations } = require('../src/aiReport');
 const fs = require('fs');
 
-async function main(aiEndpoint, aiApiKey, systemUnderTestUrl) {
+async function runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl) {
   if (!aiEndpoint || !aiApiKey || !systemUnderTestUrl) {
     throw new Error('AI Endpoint, API Key, and System Under Test URL are required.');
   }
@@ -21,4 +21,4 @@ async function main(aiEndpoint, aiApiKey, systemUnderTestUrl) {
   }
 }
 
-module.exports = { main };
+module.exports = { runAccessibilityCheck };
