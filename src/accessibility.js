@@ -1,54 +1,52 @@
-const { chromium } = require('playwright');  
-const axeCore = require('axe-core'); 
+const { chromium } = require('playwright');
+const axeCore = require('axe-core');
 const fs = require('fs');
 
-
-const args = process.argv.slice(2);  // Extract command-line arguments after the script name
-const url = args[args.length - 1];  // The URL is the last argument passed
-
+// Function to inject Axe Core into the page
 async function injectAxeCore(page) {
   const axeSource = axeCore.source;
-  await page.addScriptTag({ content: axeSource });  
+  await page.addScriptTag({ content: axeSource });
 }
 
-async function runAccessibilityCheck(page, context="body",options={}) {
+// Function to run the accessibility check
+async function runAccessibilityCheck(page, context = 'body', options = {}) {
   const results = await page.evaluate(() => {
     return window.axe.run();
   });
-
-  return results; 
+  return results;
 }
 
-function saveResultsToFile(results) {
-  fs.writeFileSync('./detailedReport.json', JSON.stringify(results, null, 2), 'utf-8');
-  console.log('Accessibility results have been saved to "detailedReport.json"');
+// Function to save results to a file
+function saveResultsToFile(results, filePath = './detailedReport.json') {
+  fs.writeFileSync(filePath, JSON.stringify(results, null, 2), 'utf-8');
+  console.log(`Accessibility results have been saved to "${filePath}"`);
 }
 
-async function runTest() {
-  const browser = await chromium.launch();  
-  const page = await browser.newPage(); 
-  
-  await page.goto(url);  
+// Main function to run the accessibility test
+async function runAccessibilityTest(url, options = {}, resultFilePath = './detailedReport.json') {
+  if (!url) {
+    throw new Error('A URL must be provided to run the accessibility test.');
+  }
 
-  await injectAxeCore(page);  
-  const results = await runAccessibilityCheck(page,"body",{
-    rules: {
-      'color-contrast': { enabled: true },
-      'image-alt': { enabled: true },
-      'region': { enabled: true },
-      'aria-hidden-focus': { enabled: true },
-      'heading-order': { enabled: true }
-    },
-    tags: ['wcag2aa'],
-    include: ['.content'],
-    exclude: ['.header', '.footer', 'iframe']
-  });  
-  saveResultsToFile(results);  
-  
-  await browser.close();  
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+
+  try {
+    console.log(`Navigating to ${url}...`);
+    await page.goto(url);
+
+    await injectAxeCore(page);
+    console.log('Running accessibility check...');
+    const results = await runAccessibilityCheck(page, 'body', options);
+
+    saveResultsToFile(results, resultFilePath);
+    console.log('Accessibility test completed.');
+  } catch (error) {
+    console.error('Error during the accessibility test:', error);
+    throw error;
+  } finally {
+    await browser.close();
+  }
 }
 
-
-runTest().catch((error) => {
-  console.error('Error running the accessibility test:', error);
-});
+module.exports = { runAccessibilityTest };

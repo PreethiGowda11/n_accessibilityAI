@@ -1,59 +1,24 @@
-const readline = require('readline');
-const { exec } = require('child_process');
+const { runAccessibilityTest } = require('./accessibility');
+const { processAllViolations } = require('./aiReport');
+const fs = require('fs');
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+async function main(aiEndpoint, aiApiKey, systemUnderTestUrl) {
+  if (!aiEndpoint || !aiApiKey || !systemUnderTestUrl) {
+    throw new Error('AI Endpoint, API Key, and System Under Test URL are required.');
+  }
 
-// Function to execute a shell command
-const executeCommand = (command) => {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`exec error: ${error}`);
-        reject(error);
-      }
-      if (stderr) {
-        console.error(`stderr: ${stderr}`);
-        reject(stderr);
-      }
-      console.log(`stdout: ${stdout}`);
-      resolve(stdout);
-    });
-  });
-};
+  try {
+    console.log('Running Accessibility Test...');
+    await runAccessibilityTest(systemUnderTestUrl);
 
-// Function to prompt the user for a URL and run the scripts
-const runScripts = async () => {
-  // Prompt the user to input the URL
-  rl.question('Please enter the URL for accessibility check: ', async (url) => {
-    if (!url) {
-      console.log('You must provide a URL to continue.');
-      rl.close();  // Close the readline interface
-      return;
-    }
+    console.log('Generating AI Report...');
+    const reportData = JSON.parse(fs.readFileSync('./detailedReport.json', 'utf8'));
+    await processAllViolations(reportData, aiEndpoint, aiApiKey);
 
-    try {
-     
-      await executeCommand(`node src/accessibility.js ${url}`);
-      console.log('Accessibility check completed.');
+    console.log('Accessibility analysis completed. Report generated at "violation_report.html".');
+  } catch (error) {
+    console.error('Error during accessibility testing:', error.message || error);
+  }
+}
 
-      console.log('AI is generating Report...');
-      await executeCommand('node src/aiReport.js');
-      console.log('AI report generated.');
-
-      rl.close();
-    } catch (error) {
-      console.error('Error executing scripts:', error);
-      rl.close();  // Close the readline interface if there's an error
-    }
-  });
-};
-runScripts();
-// // Export all functions and objects
-// module.exports = {
-//   rl,
-//   executeCommand,
-//   runScripts,
-// };
+module.exports = { main };
