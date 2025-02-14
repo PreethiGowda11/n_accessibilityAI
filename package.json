@@ -1,6 +1,6 @@
 {
     "name": "nilgiriaccessibility",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Automated accessibility testing using Playwright and axe-core",
     "main": "index.js",
     "keywords": [],
