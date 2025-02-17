@@ -27,13 +27,21 @@ Perfect for teams aiming to automate, analyze, and enhance their web accessibili
 
 ### Prerequisites
 
-1. **Node.js**: Ensure you have [Node.js](https://nodejs.org/) installed.
+1. Ensure you have **Node.js** and **TypeScript** installed on your machine.
+   - You can download Node.js from [here](https://nodejs.org/).
+   - To install TypeScript globally, run the following command:
+     ```bash
+     npm install -g typescript
+     ```
+
 2. **IDE**: This project is written in **TypeScript**, so use an IDE that supports Node.js, such as **VSCode** or **WebStorm**.
 3. **AI API Key and Endpoint**: The project uses AI for report generation. Make sure you have your **AI API key** and **endpoint** ready.
 
 ---
 
 ## Setup: Install and Run
+
+#### Note : Below two steps is for Creating new Project , if you alreday project then please ignore the below two steps
 
 **Create a New Node.js Project (If Needed)**
 
@@ -47,47 +55,21 @@ If you don’t have a Node.js project yet, follow these steps:
   ```bash
    npm init -y
    ```
-#### Note : Above two steps is for Creating new Project , if you alreday project then please ignore the above two steps
 
 1. **Install the Dependency**:
    ```bash
    npm install nilgiriaccessibility --save -d
    ```
 
-2. **Import the `runAccessibilityCheck` method from nilgiri-accessibility**:
-   ```typescript
-   import { runAccessibilityCheck } from 'nilgiriaccessibility';
-   ```
-
-3. **Call the `runAccessibilityCheck` function with the required parameters**:
-   ```typescript
-   const aiEndpoint = 'https://api.openai.com/v1/completions';  // Your AI service endpoint
-   const aiApiKey = 'sk-xxxxxx12345';  // Your AI service API key
-   const systemUnderTestUrl = 'https://example.com';  // The URL to scan
-
-   runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl)
-     .then(() => console.log('Accessibility analysis completed!'))
-     .catch(err => console.error('Error:', err));
-   ```
-
----
-
-### Parameters
-
-| Parameter          | Type   | Description                                                             | Example                                     |
-|--------------------|--------|-------------------------------------------------------------------------|---------------------------------------------|
-| `aiEndpoint`       | string | The endpoint URL of the AI service (e.g., OpenAI API).                  | `'https://api.openai.com/v1/completions'`   |
-| `aiApiKey`         | string | The API key for authenticating with the AI service.                     | `'sk-xxxxxx12345'`                          |
-| `systemUnderTestUrl` | string | The URL of the target web page to scan for accessibility issues.         | `'https://example.com'`                     |
-
----
 
 <h1 align="center">How to Run the Application?</h1>
 
 ### **Running the Application**
 To run the `runAccessibilityCheck` method, import and call it in your script:
 
-Example: `testFile.ts`
+Example: Create new `testFile.ts`file and copy paste the below example code ,
+
+replace your '`aiEndpoint`', `aiApiKey` and `systemUnderTestUrl` with correct values .
 ```typescript
 import { runAccessibilityCheck } from 'nilgiriaccessibility';
 
@@ -99,16 +81,18 @@ runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl)
   .then(() => console.log('Accessibility analysis completed!'))
   .catch(err => console.error('Error during analysis:', err));
 ```
+---
 
+### Parameters
+
+| Parameter          | Type   | Description                                                             | Example                                     |
+|--------------------|--------|-------------------------------------------------------------------------|---------------------------------------------|
+| `aiEndpoint`       | string | The endpoint URL of the AI service (e.g., OpenAI API).                  | `'https://api.openai.com/v1/completions'`   |
+| `aiApiKey`         | string | The API key for authenticating with the AI service.                     | `'sk-xxxxxx12345'`                          |
+| `systemUnderTestUrl` | string | The URL of the target web page to scan for accessibility issues.         | `'https://example.com'`                     |
+
+---
 #### If you are running your file in Type Script then follow this Step 
-
-### Prerequisites
-1. Ensure you have **Node.js** and **TypeScript** installed on your machine.
-   - You can download Node.js from [here](https://nodejs.org/).
-   - To install TypeScript globally, run the following command:
-     ```bash
-     npm install -g typescript
-     ```
 
 ### Steps to Run
 
@@ -117,8 +101,6 @@ runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl)
    ```bash
    tsc <your-file-name>.ts
    node <your-file-name>.js
-   
-
 ---
 
 <h1 align="center">How Report Looks Like?</h1>

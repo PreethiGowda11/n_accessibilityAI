@@ -1,6 +1,6 @@
 {
     "name": "nilgiriaccessibility",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Automated accessibility testing using Playwright and axe-core and get AI generated Report for accessibility violation",
     "main": "index.js",
     "license": "MIT",
@@ -11,15 +11,15 @@
         "test": "node test/main.js"
     },
     "dependencies": {
-        "axe-core": "^4.10.2"
-    },
-    "devDependencies": {
+        "axe-core": "^4.10.2",
         "@types/node": "^20.6.0",
         "axios": "^1.7.9",
-        "dotenv": "^16.4.7",
         "playwright": "^1.50.0",
         "readline-sync": "^1.4.10",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.3"
+    },
+    "devDependencies": {
+        "dotenv": "^16.4.7"
     }
 }
