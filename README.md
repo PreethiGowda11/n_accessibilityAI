@@ -35,6 +35,20 @@ Perfect for teams aiming to automate, analyze, and enhance their web accessibili
 
 ## Setup: Install and Run
 
+**Create a New Node.js Project (If Needed)**
+
+If you don’t have a Node.js project yet, follow these steps:
+
+***Create a new project folder:***
+  ```bash
+   mkdir my-accessibility-project && cd my-accessibility-project
+   ```
+***Initialize a new Node.js project:***
+  ```bash
+   npm init -y
+   ```
+#### Note : Above two steps is for Creating new Project , if you alreday project then please ignore the above two steps
+
 1. **Install the Dependency**:
    ```bash
    npm install nilgiri-accessibility --save -d
