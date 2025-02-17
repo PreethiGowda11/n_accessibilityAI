@@ -10,9 +10,10 @@
     <a href="https://npmjs.com/package/nilgiriaccessibility">
         <img src="https://img.shields.io/npm/dm/nilgiriaccessibility.svg" alt="npm downloads">
     </a>
-    <a href="https://github.com/bhuvaneshp2998/Performance-nilgiri/blob/main/LICENSE.txt">
+    <a href="https://npmjs.com/package/nilgiriaccessibility">
         <img src="https://img.shields.io/npm/l/nilgiriaccessibility.svg" alt="license">
-    </a>
+</a>
+
 </p>
 
 ## **nilgiri-accessibility**: A Core Component of the Nilgiri Framework
