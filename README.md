@@ -51,12 +51,12 @@ If you don’t have a Node.js project yet, follow these steps:
 
 1. **Install the Dependency**:
    ```bash
-   npm install nilgiri-accessibility --save -d
+   npm install nilgiriaccessibility --save -d
    ```
 
 2. **Import the `runAccessibilityCheck` method from nilgiri-accessibility**:
    ```typescript
-   import { runAccessibilityCheck } from 'nilgiri-accessibility';
+   import { runAccessibilityCheck } from 'nilgiriaccessibility';
    ```
 
 3. **Call the `runAccessibilityCheck` function with the required parameters**:
@@ -89,7 +89,7 @@ To run the `runAccessibilityCheck` method, import and call it in your script:
 
 Example: `testFile.ts`
 ```typescript
-import { runAccessibilityCheck } from 'nilgiri-accessibility';
+import { runAccessibilityCheck } from 'nilgiriaccessibility';
 
 const aiEndpoint = 'https://api.openai.com/v1/completions';
 const aiApiKey = 'sk-xxxxxx12345';
