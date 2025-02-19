@@ -121,7 +121,7 @@ runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl)
 ---
 
 ## Support  
-* For any support, please feel free to drop your query at the [nilgiri-accessibility GitHub repository](https://github.com/triconinfotech/nilgiriaccessibility/issues).  
+* For any support, please feel free to drop your query at the [nilgiri-accessibility GitHub repository](https://github.com/PreethiGowda11/n_accessibilityAI/issues).  
 
 ---
 

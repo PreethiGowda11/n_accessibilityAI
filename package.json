@@ -1,13 +1,12 @@
 {
     "name": "nilgiriaccessibility",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Automated accessibility testing using Playwright and axe-core and get AI generated Report for accessibility violation",
     "main": "index.js",
     "license": "MIT",
-    "keywords": [],
-    
+    "keywords": ["nilgiriaccessibility","nilgiri","Tricon","AI","accessibility"],
     "scripts": {
-        "dependencyInstall": "npm install axios dotenv playwright readline-sync ts-node typescript --save-dev",
+        "dependencyInstall": "npm install axios playwright ts-node typescript --save -dev",
         "test": "node test/main.js"
     },
     "dependencies": {
@@ -15,11 +14,18 @@
         "@types/node": "^20.6.0",
         "axios": "^1.7.9",
         "playwright": "^1.50.0",
-        "readline-sync": "^1.4.10",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.3"
     },
     "devDependencies": {
         "dotenv": "^16.4.7"
+    },
+    "homepage": "https://github.com/PreethiGowda11/n_accessibilityAI#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PreethiGowda11/n_accessibilityAI.git"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
     }
 }
