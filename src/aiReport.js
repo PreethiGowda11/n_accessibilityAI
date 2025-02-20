@@ -4,145 +4,163 @@ const fs = require('fs');
 
 async function processAllViolations(data, apiUrl, apiKey) {
   const impactLevels = { critical: 0, serious: 0, moderate: 0 };
+  let violationsHtml = "";
 
-  if (data.violations && Array.isArray(data.violations)) {
-    for (let violationIndex = 0; violationIndex < data.violations.length; violationIndex++) {
-      const violation = data.violations[violationIndex];
-      if (violation && violation.nodes) {
-        for (let nodeIndex = 0; nodeIndex < violation.nodes.length; nodeIndex++) {
-          const node = violation.nodes[nodeIndex];
-          calculateImpactLevels(violation, impactLevels);
-          await processViolation(violation, node, apiUrl, apiKey);
+  if (data.violations && Array.isArray(data.violations) && data.violations.length > 0) {
+    for (let violation of data.violations) {
+      if (violation && violation.nodes && violation.nodes.length > 0) {
+        calculateImpactLevels(violation, impactLevels);
+        for (let node of violation.nodes) {
+          const aiHtml = await processViolation(violation, node, apiUrl, apiKey);
+          violationsHtml += formatViolationHtml(violation, aiHtml);
         }
       }
     }
   } else {
-    console.error('No violations found or data.violations is not an array.');
+    violationsHtml = `<p>No accessibility violations found!</p>`;
   }
 
-  logImpactSummary(impactLevels);
+  generateFullHtmlReport(impactLevels, violationsHtml);
 }
 
 function calculateImpactLevels(violation, impactLevels) {
-  const impact = violation.impact;
-  if (impactLevels.hasOwnProperty(impact)) {
-    impactLevels[impact]++;
+  if (impactLevels.hasOwnProperty(violation.impact)) {
+    impactLevels[violation.impact]++;
   }
-}
-
-function logImpactSummary(impactLevels) {
-  console.log('Impact Levels:', impactLevels);
-  const totalCount = Object.values(impactLevels).reduce((sum, count) => sum + count, 0);
-  console.log('Violations Count by Impact:', impactLevels);
-  console.log(`Total Violations (Critical, Serious, Moderate): ${totalCount}`);
 }
 
 async function processViolation(violation, node, apiUrl, apiKey) {
   const jsonData = JSON.stringify({ violationId: violation.id, node }, null, 2);
-  const prompt = generatePrompt(jsonData);
+  const prompt = `Analyze this accessibility issue and generate a structured HTML report:\n\n${jsonData}`;
+  
   try {
     const response = await callAIService(prompt, apiUrl, apiKey);
-    const aiHtmlStructure = response.data.choices[0].message.content.trim();
-    appendToHtmlReport(aiHtmlStructure, violation.id);
+    return sanitizeAIResponse(response.data.choices[0].message.content.trim());
   } catch (error) {
-    console.error('Error while calling OpenAI API:', error.message || 'Unknown error');
+    console.error('Error while calling AI API:', error.message || 'Unknown error');
+    return '<p>Error fetching AI report.</p>';
   }
-}
-
-function generatePrompt(jsonData) {
-  return `
-    ${jsonData}
-    Analyze the following accessibility JSON report and generate a comprehensive table in HTML format...
-    (Full prompt content is preserved)
-  `;
 }
 
 async function callAIService(prompt, apiUrl, apiKey) {
-  return axios.post(
-    apiUrl,
-    { messages: [{ role: 'system', content: 'You are a senior web accessibility expert...' }, { role: 'user', content: prompt }], temperature: 0.3 },
-    { headers: { 'Content-Type': 'application/json', 'api-key': apiKey } }
-  );
+  return axios.post(apiUrl, {
+    messages: [
+      { role: 'system', content: 'You are an expert in web accessibility audits.' },
+      { role: 'user', content: prompt }
+    ],
+    temperature: 0.3
+  }, { headers: { 'Content-Type': 'application/json', 'api-key': apiKey } });
 }
 
-function appendToHtmlReport(htmlContent, ruleId) {
-  console.log('Appending AI report...');
-  const reportFilePath = 'violation_report.html';
+function sanitizeAIResponse(aiHtml) {
+  return aiHtml.replace(/```html|```/g, '').trim();
+}
 
-  if (!fs.existsSync(reportFilePath)) {
-    fs.writeFileSync(reportFilePath, generateHtmlHeader(), 'utf8');
-  }
-
-  const formattedHtml = `
+function formatViolationHtml(violation, aiHtml) {
+  return `
     <div class="violation">
-      <h3>${ruleId} Issue</h3>
-      <details><summary>View Detailed AI Report</summary><p>${htmlContent}</p></details>
+      <h3>${violation.id} Issue</h3>
+      <p><strong>Impact Level:</strong> ${violation.impact || "Unknown"}</p>
+      <details>
+        <summary>View AI Report</summary>
+        <div class="ai-report">${aiHtml}</div>
+      </details>
     </div>
   `;
-  fs.appendFileSync(reportFilePath, formattedHtml, 'utf8');
 }
-
-function generateHtmlHeader() {
-  return `
+function generateFullHtmlReport(impactLevels, violationsHtml) {
+  const reportHtml = `
     <html>
       <head>
         <title>Accessibility AI Report</title>
         <style>
           body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9fafb;
             color: #333;
             margin: 0;
-            padding: 0;
+            padding: 20px;
           }
           h1 {
-            background-color: #4CAF50;
-            color: #2c3e50;
-            padding: 15px;
             text-align: center;
-            margin: 0;
-            border-bottom: 3px solid #ddd;
+            color: #222;
           }
           .summary-grid {
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            justify-content: center;
             gap: 20px;
-            padding: 20px;
+            margin: 20px 0;
           }
           .summary-card {
-            flex: 1;
-            min-width: 200px;
-            max-width: 300px;
-            padding: 20px;
+            min-width: 220px;
+            padding: 15px;
             text-align: center;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           }
-          .critical { background-color: #ffe6e6; border: 1px solid #ff4d4d; }
-          .serious { background-color: #fff4e6; border: 1px solid #ffa64d; }
-          .moderate { background-color: #e6f7ff; border: 1px solid #66c2ff; }
+          .critical {
+            background: #ffebee;
+            border: 2px solid #d32f2f;
+            color: #b71c1c;
+          }
+          .serious {
+            background: #fff3e0;
+            border: 2px solid #f57c00;
+            color: #e65100;
+          }
+          .moderate {
+            background: #e3f2fd;
+            border: 2px solid #1976d2;
+            color: #0d47a1;
+          }
+          .violation {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+          details {
+            margin-top: 10px;
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          summary {
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+          }
         </style>
       </head>
       <body>
         <h1>Comprehensive Web Accessibility Audit Report</h1>
-        <p>Generated on: ${new Date().toLocaleString()}</p>
+        <p style="text-align: center;">Generated on: ${new Date().toLocaleString()}</p>
         <section class="summary-grid">
           <div class="summary-card critical">
             <h3>Critical Issues</h3>
-            <p><strong>[Critical Count]</strong></p>
+            <p>${impactLevels.critical}</p>
           </div>
           <div class="summary-card serious">
             <h3>Serious Issues</h3>
-            <p><strong>[Serious Count]</strong></p>
+            <p>${impactLevels.serious}</p>
           </div>
           <div class="summary-card moderate">
             <h3>Moderate Issues</h3>
-            <p><strong>[Moderate Count]</strong></p>
+            <p>${impactLevels.moderate}</p>
           </div>
         </section>
+        <section>
+          ${violationsHtml}
+        </section>
+      </body>
+    </html>
   `;
+  fs.writeFileSync('violation_report.html', reportHtml, 'utf8');
 }
+
 
 module.exports = { processAllViolations };
