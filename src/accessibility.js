@@ -19,7 +19,7 @@ async function runAccessibilityCheck(page, context = 'body', options = {}) {
 // Function to save results to a file
 function saveResultsToFile(results, filePath = './detailedReport.json') {
   fs.writeFileSync(filePath, JSON.stringify(results, null, 2), 'utf-8');
-  console.log(`Accessibility results have been saved to "${filePath}"`);
+  console.log(`✅Accessibility results have been saved to "${filePath}"`);
 }
 
 // Main function to run the accessibility test
