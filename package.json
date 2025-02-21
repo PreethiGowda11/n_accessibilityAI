@@ -1,6 +1,6 @@
 {
     "name": "nilgiriaccessibility",
-    "version": "1.0.12",
+    "version": "1.0.14",
     "description": "Automated accessibility testing using Playwright and axe-core and get AI generated Report for accessibility violation",
     "main": "index.js",
     "license": "MIT",

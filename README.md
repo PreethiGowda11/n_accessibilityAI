@@ -103,13 +103,46 @@ runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl)
    node <your-file-name>.js
 ---
 
-<h1 align="center">How Report Looks Like?</h1>
+<h1 align="center"> 🛠️ How AI Accessibility Analysis Report Looks Like?</h1>
 
-* Add a sample report GIF or screenshot here.
+# 
+
+## Overview  
+The **AI Accessibility Analysis Report** provides a comprehensive overview of accessibility violations detected on a webpage. It categorizes issues based on their severity and offers clear guidance on how to fix and test them.  
+
+## Report Preview  
+
+![AI Accessibility Report](https://raw.githubusercontent.com/PreethiGowda11/n_accessibilityAI/main/logo/accessibilityReport.png)  
+
+## Report Structure  
+
+### 🔹 Summary Section  
+The report displays a **summary of violations** in categorized tiles:  
+- 🟥 **Critical** - Issues that severely impact accessibility and must be fixed immediately.  
+- 🟧 **Serious** - Significant issues that affect usability and should be prioritized.  
+- 🟦 **Moderate** - Moderate issues that impact accessibility but may not be urgent.  
+- 🟩 **Minor** - Minor issues that should be addressed but have minimal impact.  
+
+### 🔹 Accessibility Violations Table  
+The detailed table provides the following information for each violation:  
+1. **ID** - A unique identifier for the issue.  
+2. **Impact** - Severity level (Critical, Serious, Moderate, Minor).  
+3. **Description** - A brief explanation of the violation.  
+4. **Fix** - A button that links to guidance on resolving the issue.  
+5. **Test** - A button that provides steps to verify the fix.  
+6. **Details** - Additional in-depth information about the violation.  
+
+## How to Use  
+1. Run the **AI Accessibility Analysis** tool on your website.  
+2. Open the generated **violation_report.html** in your browser.  
+3. Review the violations and follow the suggested fixes to improve accessibility.  
+
+📢 **Ensuring accessibility not only improves user experience but also makes your application more inclusive!**  
 
 ---
 
-## Features
+<h1 align="center"> Features of Accessibility Report</h1>
+
 - Automated accessibility scans using **Playwright** and **Axe Core**.
 - AI-powered analysis for accessibility insights and suggestions.
 - Simple, configurable interface for passing **AI endpoint**, **API key**, and **SUT URL**.
@@ -119,8 +152,8 @@ runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl)
 - Fully compatible with **TypeScript** and **Node.js**.
 
 ---
+<h1 align="center"> Reach out to us for any Support or help </h1>
 
-## Support  
 * For any support, please feel free to drop your query at the [nilgiri-accessibility GitHub repository](https://github.com/PreethiGowda11/n_accessibilityAI/issues).  
 
 ---
