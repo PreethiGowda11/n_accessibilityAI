@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/triconinfotech/nilgiri/main/files/nilgiri.PNG" alt="Nilgiri Logo" width="200"/>
+  <img src="https://raw.githubusercontent.com/PreethiGowda11/n_accessibilityAI/main/logo/Nilgiri_Accessibility.png" alt="Nilgiri Logo" width="200"/>
 </p>
 <h1 align="center">Nilgiri Framework</h1>
 <p align="center">
