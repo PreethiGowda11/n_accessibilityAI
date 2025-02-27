@@ -73,11 +73,11 @@ replace your '`aiEndpoint`', `aiApiKey` and `systemUnderTestUrl` with correct va
 ```typescript
 import { runAccessibilityCheck } from 'nilgiriaccessibility';
 
-const aiEndpoint = 'https://api.openai.com/v1/completions';
 const aiApiKey = 'sk-xxxxxx12345';
+const aiEndpoint = 'https://api.openai.com/v1/completions';
 const systemUnderTestUrl = 'https://example.com';
 
-runAccessibilityCheck(aiEndpoint, aiApiKey, systemUnderTestUrl)
+runAccessibilityCheck(aiApiKey,aiEndpoint, systemUnderTestUrl)
   .then(() => console.log('Accessibility analysis completed!'))
   .catch(err => console.error('Error during analysis:', err));
 ```
